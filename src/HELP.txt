@@ -1,0 +1,17 @@
+Enviar pro github pela primeira vez
+copiar do github
+clonar no netbeans
+enviar
+
+Pegar do github pela primeira vez
+copiar do github
+clonar no netbeans
+puxar
+
+Enviar pro github
+Adicionar
+Commit
+Enviar
+
+Sempre que comecar a mexer
+puxar
