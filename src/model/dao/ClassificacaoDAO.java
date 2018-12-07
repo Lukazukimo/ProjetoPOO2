@@ -46,7 +46,7 @@ public class ClassificacaoDAO {
 //        
         habilitar();
             String sql = "INSERT INTO classificacao (nome, pontos, "
-                     + "posicao, confrontos_class) "
+                     + "confrontos_class) "
 //                     + "VALUES (?, ?, ?, ?)";
                      + "VALUES (?, ?, ?)";
         
@@ -58,7 +58,7 @@ public class ClassificacaoDAO {
             stmt.setString(1, classificacao.getNome());
             stmt.setInt(2, classificacao.getPontos());
 //            stmt.setInt(3, classificacao.getPos());
-            stmt.setInt(4, classificacao.getConfrontos().getNumeroJogo());            
+            stmt.setInt(3, classificacao.getConfrontosId());            
 //            stmt.execute(sql1);
             stmt.executeUpdate();
             return true; 
@@ -71,7 +71,7 @@ public class ClassificacaoDAO {
     }
     public List<Classificacao> findall () {
         habilitar();
-        String sql = "SELECT * FROM classificacao INNER JOIN confronto ON classificacao.id_class = confronto.numeroJogo;";
+        String sql = "SELECT * FROM classificacao INNER JOIN confronto ON classificacao.id_class = confronto.numeroJogo";
         PreparedStatement stmt = null; 
         ResultSet rs = null;
             
@@ -104,20 +104,19 @@ public class ClassificacaoDAO {
     }
    
     
-    /*public boolean update(Confrontos confronto, int numJogo){
-            String sql = "UPDATE confronto SET time1 = ?, "
-                    + "time2 = ?, "
-                    + "resultadoIda = ?, "
-                    + "WHERE numeroJogo = " + numJogo;
+    public boolean update(Classificacao classificacao){
+        habilitar();
+            String sql = "UPDATE classificacao SET nome = ?, "
+                    + "pontos = ? "
+                    + "WHERE id_class = ?";
         
         PreparedStatement stmt = null;
         try {
             stmt = con.prepareStatement(sql);
                   
-            stmt.setString(1, confronto.getNomeTime1());            
-            stmt.setString(2, confronto.getNomeTime2());
-            stmt.setInt(3, confronto.getResultadoIda());
-            stmt.setInt(4, confronto.getNumeroJogo());
+            stmt.setString(1, classificacao.getNome());            
+            stmt.setInt(2, classificacao.getPontos());
+            stmt.setInt(3, classificacao.getIdClass());            
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -127,7 +126,7 @@ public class ClassificacaoDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-    */
+    
 //    public boolean delete(Confrontos confronto){
 //            String sql = "DELETE FROM confronto WHERE numeroJogo = ?";
 //        

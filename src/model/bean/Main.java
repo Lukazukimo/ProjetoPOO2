@@ -8,6 +8,7 @@ package model.bean;
 import model.dao.*;
 import java.util.Scanner;
 import connection.*;
+import java.util.Random;
 
 public class Main {
     public static void main (String [] args) {
@@ -24,7 +25,9 @@ public class Main {
         ConfrontosDAO confdao = new ConfrontosDAO();
         Classificacao clas = new Classificacao();
         ClassificacaoDAO clasdao = new ClassificacaoDAO();
-        ConnectionFactory conn = new ConnectionFactory();        
+        Random geradorResultado = new Random();
+//        ConnectionFactory conn = new ConnectionFactory();        
+        
         
         Sql sql = new Sql();
         
@@ -86,9 +89,9 @@ public class Main {
             opcao = s.nextInt();
             if(opcao == 1 && verificaCadastro == true){
                 System.out.println("Digite o nome do time:");
-                time.setNome(s.next());
+                time.setNome(s.next());                
                 while(escolheTime == true){
-                    System.out.println("Escolha o opçao de esporte:");
+                    System.out.println("Escolha o opcao de esporte:");
                     System.out.println("1 - Futebol");
                     System.out.println("2 - Volei");
                     opcaoEsporte = s.nextInt();
@@ -131,34 +134,67 @@ public class Main {
             }
             else if(opcao == 3){  
                 for(Time t: timedao.findall()){
-                    for(Adversario adver: advdao.findall()){                    
-                        conf.setNomeTime1(t.getNome());
-                        System.out.println(conf.getNomeTime1());
-                        conf.setNomeTime2(adver.getNome()); 
-                        System.out.println(conf.getNomeTime2());
-                        conf.setAdversario(adver);
-                        System.out.println(conf.getAdversarioId());
-                        conf.setTime(t);           
-                        System.out.println(conf.getTimeId());
+                    for(Adversario adver: advdao.findall()){                                   
+                        conf.setNomeTime1(t.getNome());                        
+                        conf.setNomeTime2(adver.getNome());                         
+                        conf.setAdversario(adver);                        
+                        conf.setTime(t);                                   
                         if(confdao.inserir(conf)){
                             System.out.println("Gerado com sucesso!");
                         }
                         else{
                             System.out.println("Erro ao gerar!");
                         }
-                    }    
+                    }
                 }
             }
-            else if(opcao == 4){
-                
+            else if(opcao == 4){                
+                for(Confrontos confr: confdao.findall()){
+                    confr.getNumeroJogo();                    
+                    confr.setResultadoIda(geradorResultado.nextInt(2));                    
+                    if(confdao.update(confr)){
+                        System.out.println("Partida terminada!");
+                    }
+                    else{
+                        System.out.println("Erro ao comecar a partida!");
+                    }
+                }                
             }
-            else if(opcao == 5){
+            else if(opcao == 5){       
                 int i = 1;
-                System.out.println("Posicao  Pontos  Nome do Time");
-                for(Classificacao c: clasdao.findall()){
-                    System.out.println("teste");
-                    System.out.printf("%01d       %02d    %s\n",i++ ,c.getPontos(),c.getNome());
+                int pontuar, salvarPontos;
+                TimeDAO dao = new TimeDAO();
+                for(Time t: dao.findall()){   
+                    clas.setNome(t.getNome());
+                    System.out.println(clas.getNome());
+                    if(clasdao.inserir(clas)){
+                        System.out.println("Consegui");
+                    }
+                    else{
+                        System.out.println("Nao ");
+                    }
                 }
+                
+                for(Confrontos confr: confdao.findall()){
+                    Classificacao cla = new Classificacao();
+                    pontuar = confr.getResultadoIda();                                        
+                    cla.setConfrontos(confr);
+                    if(pontuar == 1){
+                        salvarPontos = cla.getPontos();
+                        cla.setPontos(salvarPontos + 3);                                                
+                    }               
+                    if(clasdao.update(cla)){
+                        System.out.println("Somado os pontos");
+                    }
+                    else{
+                        System.out.println("Erro ao somar os pontos!");
+                    }
+                }                
+                System.out.println("Posicao  Pontos  Nome do Time");   
+                for(Classificacao c: clasdao.findall()){   
+                    System.out.println("teste2");
+                    System.out.printf("%01d       %02d    %s\n",i++ ,c.getPontos(),c.getNome());                    
+                }                
             }
             else if(opcao == 0){
                 System.out.println("Encerrando a aplicacao!");

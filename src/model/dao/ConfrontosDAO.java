@@ -69,7 +69,8 @@ public class ConfrontosDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-    public List<Confrontos> findall () {        
+    public List<Confrontos> findall () {  
+        habilitar();
         String sql = "SELECT * FROM Confronto INNER JOIN Times ON confronto.id_time = Times.id INNER JOIN Adversario on confronto.id_adversario = Adversario.id";
         PreparedStatement stmt = null; 
         ResultSet rs = null;
@@ -105,11 +106,12 @@ public class ConfrontosDAO {
         return confrontos;
     }
     
-    /*public boolean update(Confrontos confronto, int numJogo){
-            String sql = "UPDATE confronto SET time1 = ?, "
-                    + "time2 = ?, "
-                    + "resultadoIda = ?, "
-                    + "WHERE numeroJogo = " + numJogo;
+    public boolean update(Confrontos confronto){
+        habilitar();
+            String sql = "UPDATE confronto SET nomeTime1 = ?, "
+                    + "nomeTime2 = ?, "
+                    + "resultadoIda = ? "
+                    + "WHERE numeroJogo = ?";
         
         PreparedStatement stmt = null;
         try {
@@ -128,7 +130,7 @@ public class ConfrontosDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-    */
+    
     public boolean delete(Confrontos confronto){
             String sql = "DELETE FROM confronto WHERE numeroJogo = ?";
         

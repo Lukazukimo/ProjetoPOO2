@@ -66,8 +66,12 @@ public class Classificacao {
         this.confrontos = confrontos;
     }
     
-    public void gerarConfrontos () {
-        
+    public int getConfrontosId() {
+        return confrontos.getNumeroJogo();
+    }
+    
+    public String getTimeNome(){
+        return confrontos.getTime().getNome();
     }
     
 }

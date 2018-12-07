@@ -48,7 +48,7 @@ public class Sql {
                 + "pontos int (3),"
 //                + "posicao int (2),"
                 + "confrontos_class int (8),"
-                + "FOREIGN KEY (confrontos_class) references Confronto (numeroJogo)"
+                + "FOREIGN KEY (confrontos_class) references confronto (numeroJogo)"
                 + ")";
     
         try {
