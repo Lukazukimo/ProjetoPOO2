@@ -9,9 +9,9 @@ package model.bean;
  *
  * @author fabio
  */
-public class Time {
-    private String nome;
-    private int id;
+public class Time extends Adversario{
+//    private String nome;
+//    private int id;
     private String login;
     private String senha;
     private String tipoEsporte;
@@ -20,29 +20,29 @@ public class Time {
     public Time() {
     }
 
-    public Time(String nome, String login, String senha, String tipoEsporte, int qntTime) {
-        this.nome = nome;
+    public Time(String login, String senha, String tipoEsporte, int qntTime) {
+//        this.nome = nome;
         this.login = login;
         this.senha = senha;
         this.tipoEsporte = tipoEsporte;
         this.qntTime = qntTime;
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//
+//    public String getNome() {
+//        return nome;
+//    }
+//
+//    public void setNome(String nome) {
+//        this.nome = nome;
+//    }
+//
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getLogin() {
         return login;

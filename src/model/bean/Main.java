@@ -14,7 +14,7 @@ public class Main {
     public static void main (String [] args) {
         Scanner s = new Scanner(System.in);
         int opcao = 1, opcaoEsporte = -1, qntTimes = 0;        
-        String login, senha, nomeTime;
+        String login, senha;
         boolean teste = true, escolheTime = true, verificaCadastro = true;        
                 
         Time time = new Time();
@@ -23,8 +23,6 @@ public class Main {
         AdversarioDAO advdao = new AdversarioDAO();
         Confrontos conf = new Confrontos();
         ConfrontosDAO confdao = new ConfrontosDAO();
-        Classificacao clas = new Classificacao();
-        ClassificacaoDAO clasdao = new ClassificacaoDAO();
         Random geradorResultado = new Random();
 //        ConnectionFactory conn = new ConnectionFactory();        
         
@@ -138,7 +136,7 @@ public class Main {
                         conf.setNomeTime1(t.getNome());                        
                         conf.setNomeTime2(adver.getNome());                         
                         conf.setAdversario(adver);                        
-                        conf.setTime(t);                                   
+                        conf.setTime(t);   
                         if(confdao.inserir(conf)){
                             System.out.println("Gerado com sucesso!");
                         }
@@ -148,54 +146,28 @@ public class Main {
                     }
                 }
             }
-            else if(opcao == 4){                
+            else if(opcao == 4){          
                 for(Confrontos confr: confdao.findall()){
-                    confr.getNumeroJogo();                    
-                    confr.setResultadoIda(geradorResultado.nextInt(2));                    
+                    confr.getNumeroJogo();                           
+                    confr.setResultadoIda(geradorResultado.nextInt(2));                               
                     if(confdao.update(confr)){
                         System.out.println("Partida terminada!");
                     }
                     else{
                         System.out.println("Erro ao comecar a partida!");
                     }
-                }                
-            }
-            else if(opcao == 5){       
-                int i = 1;
-                int pontuar, salvarPontos;
-                TimeDAO dao = new TimeDAO();
-                for(Time t: dao.findall()){   
-                    clas.setNome(t.getNome());
-                    System.out.println(clas.getNome());
-                    if(clasdao.inserir(clas)){
-                        System.out.println("Consegui");
+                }   
+            }      
+            else if(opcao == 5){                
+                for(Confrontos confr: confdao.findall()){
+                    if(confr.getResultadoIda() == 1){
+                        System.out.println(confr.getNomeTime1()+" x "+confr.getNomeTime2()+" Vitoria");                        
                     }
                     else{
-                        System.out.println("Nao ");
+                        System.out.println(confr.getNomeTime1()+" x "+confr.getNomeTime2()+" Derrota");
                     }
                 }
-                
-                for(Confrontos confr: confdao.findall()){
-                    Classificacao cla = new Classificacao();
-                    pontuar = confr.getResultadoIda();                                        
-                    cla.setConfrontos(confr);
-                    if(pontuar == 1){
-                        salvarPontos = cla.getPontos();
-                        cla.setPontos(salvarPontos + 3);                                                
-                    }               
-                    if(clasdao.update(cla)){
-                        System.out.println("Somado os pontos");
-                    }
-                    else{
-                        System.out.println("Erro ao somar os pontos!");
-                    }
-                }                
-                System.out.println("Posicao  Pontos  Nome do Time");   
-                for(Classificacao c: clasdao.findall()){   
-                    System.out.println("teste2");
-                    System.out.printf("%01d       %02d    %s\n",i++ ,c.getPontos(),c.getNome());                    
-                }                
-            }
+            }            
             else if(opcao == 0){
                 System.out.println("Encerrando a aplicacao!");
                 teste = false;

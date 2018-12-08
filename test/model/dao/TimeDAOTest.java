@@ -23,7 +23,7 @@ public class TimeDAOTest {
     @Test
     //@Ignore
     public void inserir() {
-        Time tim = new Time("team1", "team1", "a123", "futebol", 10);
+        Time tim = new Time("team1", "a123", "futebol", 10);
         TimeDAO dao = new TimeDAO();
         if(dao.inserir(tim)){
             System.out.println("Salvo com sucesso");
@@ -35,7 +35,7 @@ public class TimeDAOTest {
     @Test
     @Ignore
     public void atualizar() {
-        Time tim = new Time("team1", "team1", "a12346", "futebol", 10);
+        Time tim = new Time("team1", "a12346", "futebol", 10);
         tim.setId(1);
         TimeDAO dao = new TimeDAO();
         if(dao.update(tim)){
